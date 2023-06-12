@@ -95,10 +95,23 @@ const hdxPartitionerAV = {
 		    minLat: thisAV.minlat,
 		    minLon: thisAV.minlon
 		});
-                hdxAV.nextAction = "methodCall";
+                hdxAV.nextAction = "firstCall";
             },
             logMessage: function(thisAV) {
                 return "Doing some setup stuff";
+            }
+        },
+        { 
+            label: "firstCall",
+            comment: "Make the first recursive call",
+            code: function(thisAV) {
+                highlightPseudocode(this.label, visualSettings.visiting);
+		
+                hdxAV.nextAction = "methodCall";
+            },
+            
+            logMessage: function(thisAV) {
+                return "Calling the Method for the first time";
             }
         },
         { 
@@ -558,6 +571,7 @@ const hdxPartitionerAV = {
         
         // building pseudocode HTML
         this.code = '<table class="pseudocode"><tr id="START" class="pseudocode"><td class="pseudocode">';
+        this.code += '</td></tr>' + pcEntry(0,'call Partition() with entire map','firstCall');
         this.code += '</td></tr>' + pcEntry(0,'Partition()','methodCall');
         this.code += '</td></tr>'+ pcEntry(1,'findCuttingAxis()<br/>'+pcIndent(2)+'sort(cuttingAxis)<br/>'+pcIndent(2)+'findMid','cutSort');
         this.code += '</td></tr>' + pcEntry(1,'setPartitions','setParts');
