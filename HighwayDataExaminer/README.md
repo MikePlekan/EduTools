@@ -50,7 +50,7 @@ The JS code for HDX is split among several files for easier management.
 * `hdxqs.js` contains the support for Query String parameters.
 * `hdxquadtreeav.js` contains the implementation of the quadtree construction AV.
 * `hdxsimplebridgeav.js` contains the implementation of the naïve bridge detection AV.
-* `hdxtravspanavs.js` contains the implementations of the graph traversal (BFS, DFS, RFS) and spanning tree (Dijkstra's, Prim's) AVs.
+* `hdxtravspanavs.js` contains the implementations of the graph traversal (BFS, DFS, RFS) and spanning tree (Dijkstra's, Prim's, A*) AVs.
 * `hdxtwicearoundtreeav.js` contains the implementation of the twice-around-the-tree traveling salesman approximation AV.
 * `hdxvertexextremesav.js` contains the implementation of the vertex-based extremes search AV.
   * `box` toggles the bounding box.
