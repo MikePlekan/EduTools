@@ -84,17 +84,7 @@ const hdxPartitionerAV = {
                 thisAV.partitionStart = Array(thisAV.numPartitions).fill(0);
                 thisAV.partitionEnd = Array(thisAV.numPartitions).fill(0);
 
-		// set up initial recursive step
-                thisAV.callStack.add({
-		    currentPart: 0,
-		    lowerBound: 0,
-		    upperBound: waypoints.length-1,
-		    partsLeft: thisAV.numPartitions,
-		    maxLat: thisAV.maxlat,
-		    maxLon: thisAV.maxlon,
-		    minLat: thisAV.minlat,
-		    minLon: thisAV.minlon
-		});
+		
                 hdxAV.nextAction = "firstCall";
             },
             logMessage: function(thisAV) {
@@ -106,7 +96,17 @@ const hdxPartitionerAV = {
             comment: "Make the first recursive call",
             code: function(thisAV) {
                 highlightPseudocode(this.label, visualSettings.visiting);
-		
+		// set up initial recursive step
+        thisAV.callStack.add({
+		    currentPart: 0,
+		    lowerBound: 0,
+		    upperBound: waypoints.length-1,
+		    partsLeft: thisAV.numPartitions,
+		    maxLat: thisAV.maxlat,
+		    maxLon: thisAV.maxlon,
+		    minLat: thisAV.minlat,
+		    minLon: thisAV.minlon
+		});
                 hdxAV.nextAction = "methodCall";
             },
             
