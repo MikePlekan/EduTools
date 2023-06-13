@@ -112,15 +112,14 @@ function startPausePressed() {
 
         hdxAV.algStat.innerHTML = "Initializing";
 
-	// vertices and/or edges here?  Update only if useV is specified
-	if (hdxAV.currentAV.hasOwnProperty("useV")) {
-            initWaypointsAndConnections(hdxAV.currentAV.useV,
-					hdxAV.currentAV.useE,
-					visualSettings.undiscovered);
-	}
+	    // vertices and/or edges here?
+        initWaypointsAndConnections(
+            hdxAV.currentAV.hasOwnProperty("useV")?hdxAV.currentAV.useV:true,
+            hdxAV.currentAV.hasOwnProperty("useE")?hdxAV.currentAV.useE:true,
+            visualSettings.undiscovered);
 
-	// remaining AV-specific preparation, after which the AV's
-	// code property should be HTML for the pseudocode
+	    // remaining AV-specific preparation, after which the AV's
+	    // code property should be HTML for the pseudocode
         hdxAV.currentAV.prepToStart();
 	
         // set pseudocode
@@ -248,8 +247,8 @@ function algOptionsDonePressed() {
         document.getElementById("speedChanger").style.display = "";
         hdxAV.setStatus(hdxStates.AV_SELECTED);
 	// set all waypoints and connections to undiscovered to start
-        initWaypointsAndConnections(true, true,
-            visualSettings.undiscovered);
+        //initWaypointsAndConnections(true, true,
+        //    visualSettings.undiscovered);
         showAVStatusPanel();
     }
 
