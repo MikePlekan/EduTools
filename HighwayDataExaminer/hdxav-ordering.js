@@ -79,7 +79,7 @@ const hdxOrderingAV = {
 
 
                 hdxAVCP.update("undiscovered",thisAV.numVUndiscovered +
-			       " vertices not yet visited");
+                               " vertices not yet visited");
 
                 thisAV.option = document.getElementById("traversalOrdering").value;
                 thisAV.refinement = document.getElementById("refinement").value;
@@ -104,7 +104,7 @@ const hdxOrderingAV = {
                             thisAV.boundingPoly[i].addTo(map);
                         }
                     }
-		    else {
+                    else {
                         thisAV.quadtree.mortonOrder();
                     }
                     break;
@@ -121,7 +121,7 @@ const hdxOrderingAV = {
                             thisAV.boundingPoly[i].addTo(map);
                         }
                     }
-		    else {
+                    else {
                         thisAV.quadtree.hilbertOrder(0);
                     }
                     break;
@@ -138,7 +138,7 @@ const hdxOrderingAV = {
                             thisAV.boundingPoly[i].addTo(map);
                         }
                     }
-		    else {
+                    else {
                         thisAV.quadtree.mooreOrder();
                     }
                     break;
@@ -155,18 +155,18 @@ const hdxOrderingAV = {
                             thisAV.boundingPoly[i].addTo(map);
                         }
                     }
-		    else {
+                    else {
                         thisAV.quadtree.greyOrder(0);
                     }
                     break;
-		    
+                    
                 default:
                     for (let i = 0; i < waypoints.length; i++) {
                         waypoints[i].num = i;
                     }
                     break;
                 }
-		
+                
                 switch (thisAV.option) {
                 case "byLat":
                     waypoints.sort(function(a, b) {return a.lat - b.lat});
@@ -188,7 +188,7 @@ const hdxOrderingAV = {
                 default:
                     break;
                 };
-		
+                
                 if (thisAV.extraEdge) {
                     waypoints.push(waypoints[0]);
                 }
@@ -214,21 +214,21 @@ const hdxOrderingAV = {
                     thisAV.v1 = waypoints[thisAV.nextToCheck].num;
                     thisAV.v2 = waypoints[thisAV.nextToCheck + 1].num;
                     updateMarkerAndTable(thisAV.v1, visualSettings.v1,
-					 31, false);
+                                         31, false);
                     updateMarkerAndTable(thisAV.v2, visualSettings.v2,
-					 31, false);
-		    
+                                         31, false);
+                    
                     hdxAV.nextAction = "addEdge";
-		    
+                    
                     thisAV.numVUndiscovered--;
                     hdxAVCP.update("undiscovered",thisAV.numVUndiscovered +
-				   " vertices not yet visited");
+                                   " vertices not yet visited");
                     hdxAVCP.update("v1","from: #" + thisAV.v1 + " " +
-				   waypoints[thisAV.nextToCheck].label);
+                                   waypoints[thisAV.nextToCheck].label);
                     hdxAVCP.update("v2","to: #" + thisAV.v2 + " " +
-				   waypoints[thisAV.nextToCheck + 1].label);
+                                   waypoints[thisAV.nextToCheck + 1].label);
                 }
-		else {
+                else {
                     hdxAV.nextAction = "cleanup";
                 }
                 hdxAV.iterationDone = true;
@@ -236,19 +236,19 @@ const hdxOrderingAV = {
             logMessage: function(thisAV) {
                 return "Iterating over the sorted array of vertices";
             },
-	    cbp: {
-		type: hdxCBPTypes.VARIABLE,
-		selector: {
-		    type: hdxCBPSelectors.VERTEX,
-		    vindexvar: "check"
-		},
-		f: function(thisAV, matchvnum, matchtype, textval) {
-		    return isCBPVertexMatch(thisAV.nextToCheck,
-					    matchvnum, matchtype, textval);
-		}		
+            cbp: {
+                type: hdxCBPTypes.VARIABLE,
+                selector: {
+                    type: hdxCBPSelectors.VERTEX,
+                    vindexvar: "check"
+                },
+                f: function(thisAV, matchvnum, matchtype, textval) {
+                    return isCBPVertexMatch(thisAV.nextToCheck,
+                                            matchvnum, matchtype, textval);
+                }               
             }
         },
-	
+        
         {
             label: "addEdge",
             comment: "",
@@ -265,25 +265,25 @@ const hdxOrderingAV = {
                 }
                 updateMarkerAndTable(thisAV.v1, color, 30, false);
                 updateMarkerAndTable(thisAV.v2, color, 30, false);
-		
-		
+                
+                
                 thisAV.drawLineVisiting();
-		
+                
                 hdxAVCP.update("totalLength","Total length of edges: " +
-			       thisAV.lengthEdges.toFixed(3) + " " +
-			       distanceUnits);
-		
+                               thisAV.lengthEdges.toFixed(3) + " " +
+                               distanceUnits);
+                
                 if (thisAV.currentEdgeLength > thisAV.longestEdgeLength) {
                     thisAV.longestEdgeLength = thisAV.currentEdgeLength;
                     hdxAVCP.update("longestEdge","Longest edge added: " +
-				   thisAV.longestEdgeLength.toFixed(3) + " " +
-				   distanceUnits);
+                                   thisAV.longestEdgeLength.toFixed(3) + " " +
+                                   distanceUnits);
                 }
-		
+                
                 hdxAVCP.update("varianceLength",
-			       "Standard deviation of edges: " +
-			       thisAV.calculateStdevOfEdges() + " " +
-			       distanceUnits);
+                               "Standard deviation of edges: " +
+                               thisAV.calculateStdevOfEdges() + " " +
+                               distanceUnits);
                 hdxAV.nextAction = "topForLoop"
             },
             logMessage: function(thisAV) {
@@ -291,7 +291,7 @@ const hdxOrderingAV = {
                     + waypoints[thisAV.nextToCheck + 1].num;
             
             }
-	},	    
+        },          
         {
             label: "cleanup",
             description: "",
@@ -299,23 +299,23 @@ const hdxOrderingAV = {
             // Partitioning
                 if (document.getElementById("calcparts").checked == true) {
                     const parts =
-			  Number(document.getElementById("numOfParts").value);
+                          Number(document.getElementById("numOfParts").value);
                     hdxPart.parts = new Array(parts);
                     hdxPart.numParts = parts;
                     for (let p = 0; p < parts; p++) {
                         hdxPart.parts[p] = new Array();
                         const left = Math.trunc(waypoints.length%parts);
-	                const inter = Math.trunc(waypoints.length/parts);
-	                const strt = p * inter + Math.min(p,left);
-	                const cnt = inter;
-	                if (p < left) cnt++;
-	                const end = strt + cnt;
+                        const inter = Math.trunc(waypoints.length/parts);
+                        const strt = p * inter + Math.min(p,left);
+                        const cnt = inter;
+                        if (p < left) cnt++;
+                        const end = strt + cnt;
                         for (let i = strt; i < end; i++) {
                             hdxPart.parts[p].push(waypoints[i].num);
                         }
                     }
                 }
-		
+                
                 waypoints = thisAV.originalWaypoints;
                 hdxAV.algStat.innerHTML =
                     "Done! Visited " + waypoints.length + " waypoints.";
@@ -323,7 +323,7 @@ const hdxOrderingAV = {
                 hdxAVCP.update("undiscovered", "0 vertices not yet visited");
                 hdxAVCP.update("v1", "");
                 hdxAVCP.update("v2", "");
-		
+                
                 hdxAV.iterationDone = true;
             },
             logMessage: function(thisAV) {
@@ -362,31 +362,41 @@ const hdxOrderingAV = {
 
         <!--<option value="fixedGrey">Fixed Grey Curve</option>-->
         </select>`;
-	
-        newAO += '<br />Refinement Threshold<input type="number" id="refinement" min="2" max="' 
-            + (waypoints.length) + '" value="2">';
-	
+        
+        newAO += '<span id="forQuadtreeOnly" style="display:none"><br />Quadtree Refinement Threshold <input type="number" id="refinement" min="2" max="' 
+            + (waypoints.length) + '" value="2" size="6" style="width: 7em">';
+        
         newAO += `<br /><input id="boundingBox" type="checkbox" name="Show Bounding Box"/>&nbsp;
-        Show Bounding Box<br />`
-	
+        Show Quadrants</span>`
+        
         newAO +=
             `<br /><input id="extraEdge" type="checkbox" name="Draw Edge from Last to First"/>&nbsp;
-        Draw Edge from Last to First<br />`
-	
+        Draw Edge from Last to First`
+        
         // partitioning
         newAO += hdxPart.partHtml();
         hdxAV.algOptions.innerHTML = newAO;
-	
-	// QS parameters
-	HDXQSClear(this);
-	HDXQSRegisterAndSetSelectList(this, "curve", "traversalOrdering");
-	HDXQSRegisterAndSetCheckbox(this, "box", "boundingBox");
-	HDXQSRegisterAndSetCheckbox(this, "connect", "extraEdge");
-	HDXQSRegisterAndSetCheckbox(this, "calcparts", "calcparts");
-	HDXQSRegisterAndSetNumber(this, "numparts", "numOfParts", 1,
-				  waypoints.length);
+        
+        // QS parameters
+        HDXQSClear(this);
+        HDXQSRegisterAndSetSelectList(this, "curve", "traversalOrdering");
+        HDXQSRegisterAndSetNumber(this, "refinement", "refinement", 2,
+                                  waypoints.length,
+                                  function(av) {
+                                      return av.usingQuadtree();
+                                  }); 
+        HDXQSRegisterAndSetCheckbox(this, "box", "boundingBox",
+                                    function(av) {
+                                        return av.usingQuadtree();
+                                    }); 
+        HDXQSRegisterAndSetCheckbox(this, "connect", "extraEdge");
+        HDXQSRegisterAndSetCheckbox(this, "calcparts", "calcparts");
+        HDXQSRegisterAndSetNumber(this, "numparts", "numOfParts", 1,
+                                  waypoints.length, function(av) {
+                                      return document.getElementById("calcparts").checked;
+                                  });
 
-	// AVCP entries
+        // AVCP entries
         hdxAVCP.add("undiscovered", visualSettings.undiscovered); 
         hdxAVCP.add("v1", visualSettings.v1);
         hdxAVCP.add("v2", visualSettings.v2);
@@ -411,7 +421,7 @@ const hdxOrderingAV = {
     },
 
     idOfAction(action) {
-	
+        
         return action.label;
     },
 
@@ -421,12 +431,12 @@ const hdxOrderingAV = {
 
         const visitingLine = [];
         visitingLine[0] = [waypoints[this.nextToCheck].lat,
-			   waypoints[this.nextToCheck].lon];
+                           waypoints[this.nextToCheck].lon];
         visitingLine[1] = [waypoints[this.nextToCheck + 1].lat,
-			   waypoints[this.nextToCheck + 1].lon];
+                           waypoints[this.nextToCheck + 1].lon];
 
         this.currentEdgeLength = convertToCurrentUnits(
-		    distanceInMiles(waypoints[this.nextToCheck].lat,
+                    distanceInMiles(waypoints[this.nextToCheck].lat,
                                     waypoints[this.nextToCheck].lon,
                                     waypoints[this.nextToCheck + 1].lat,
                                     waypoints[this.nextToCheck + 1].lon));
@@ -434,14 +444,14 @@ const hdxOrderingAV = {
         this.lengthOfEdges.push(this.currentEdgeLength);
 
         hdxAVCP.update("totalLength","Total length of edges so far: " +
-		       this.lengthEdges.toFixed(2) + " mi");
+                       this.lengthEdges.toFixed(2) + " mi");
         
         this.polyLines.push(
             L.polyline(visitingLine, {
-		color: "#" + this.rainbowGradiant.colorAt(
-		    this.nextToCheck),
-		opacity: 0.6,
-		weight: 4
+                color: "#" + this.rainbowGradiant.colorAt(
+                    this.nextToCheck),
+                opacity: 0.6,
+                weight: 4
             })
         );
         for (let i = 0; i < this.polyLines.length; i++) {
@@ -467,17 +477,17 @@ const hdxOrderingAV = {
         this.e = parseFloat(waypoints[0].lon);
         this.w = parseFloat(waypoints[0].lon);
         for (let i = 1; i < waypoints.length; i++) {
-	    
+            
             if (waypoints[i].lat > this.n) {
                 this.n = parseFloat(waypoints[i].lat);
             }
-	    else if (waypoints[i].lat < this.s) {
+            else if (waypoints[i].lat < this.s) {
                 this.s = parseFloat(waypoints[i].lat);
             }
             if (waypoints[i].lon > this.e) {
                 this.e = parseFloat(waypoints[i].lon);
             }
-	    else if (waypoints[i].lon < this.w) {
+            else if (waypoints[i].lon < this.w) {
                 this.w = parseFloat(waypoints[i].lon);
             }
         }
@@ -493,13 +503,13 @@ const hdxOrderingAV = {
             if (waypoints[i].lat > this.n) {
                 this.n = parseFloat(waypoints[i].lat);
             }
-	    else if (waypoints[i].lat < this.s) {
+            else if (waypoints[i].lat < this.s) {
                 this.s = parseFloat(waypoints[i].lat);
             }
             if (waypoints[i].lon > this.e) {
                 this.e = parseFloat(waypoints[i].lon);
             }
-	    else if (waypoints[i].lon < this.w) {
+            else if (waypoints[i].lon < this.w) {
                 this.w = parseFloat(waypoints[i].lon);
             }
         }
@@ -509,7 +519,7 @@ const hdxOrderingAV = {
         let sEnds = [[this.s,this.w],[this.s,this.e]];
         let eEnds = [[this.n,this.e],[this.s,this.e]];
         let wEnds = [[this.n,this.w],[this.s,this.w]];
-	
+        
         this.boundingPoly.push(
             L.polyline(nEnds, {
                 color: visualSettings.undiscovered.color,
@@ -538,26 +548,28 @@ const hdxOrderingAV = {
                 weight: 3
             }) 
         );
-	
+        
         for (let i = 0; i < 4; i++) {
             this.boundingPoly[i].addTo(map);
         }
     },
+
+    // is the currently selected traversal order based on a quadtree?
+    usingQuadtree() {
+
+        this.option = document.getElementById("traversalOrdering").value;
+        return this.option == "morton" || this.option == "hilbert" ||
+            this.option == "moore" || this.option == "grey";
+    }
 };
 
 function refinementChanged() {
 
-    const selector = document.getElementById("traversalOrdering");
-    const refSelector = document.getElementById("refinement");
-    switch (selector.options[selector.selectedIndex].value) {
-        case "morton":
-        case "hilbert":
-        case "moore":
-        case "grey":
-            refSelector.disabled = false;
-            break;
-        default:
-            refSelector.disabled = true;
-            break;
-    }        
+    const qtOnlySpan = document.getElementById("forQuadtreeOnly");
+    if (hdxOrderingAV.usingQuadtree()) {
+        qtOnlySpan.style.display = "";
+    }
+    else {
+        qtOnlySpan.style.display = "none";
+    }
 };

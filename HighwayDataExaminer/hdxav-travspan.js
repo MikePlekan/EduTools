@@ -73,27 +73,27 @@ function displayLDVItem(item, ldv) {
 // or a connection in thisAV.visiting
 const hdxCBPToAndVia = [
     {
-	type: hdxCBPTypes.VARIABLE,
-	selector: {
-	    type: hdxCBPSelectors.VERTEX,
-	    vindexvar: "to",
-	    id: "ToVertex"
-	},
-	f: function(thisAV, matchvnum, matchtype, textval) {
-	    return isCBPVertexMatch(thisAV.visiting.vIndex,
-				    matchvnum, matchtype, textval);
-	}		
+        type: hdxCBPTypes.VARIABLE,
+        selector: {
+            type: hdxCBPSelectors.VERTEX,
+            vindexvar: "to",
+            id: "ToVertex"
+        },
+        f: function(thisAV, matchvnum, matchtype, textval) {
+            return isCBPVertexMatch(thisAV.visiting.vIndex,
+                                    matchvnum, matchtype, textval);
+        }               
     },
     {
-	type: hdxCBPTypes.VARIABLE,
-	selector: {
-	    type: hdxCBPSelectors.EDGE,
-	    eindexvar: "via"
-	},
-	f: function(thisAV, edgenum, matchtype, textval, vnum) {
-	    return isCBPEdgeMatch(thisAV.visiting.connection,
-				  edgenum, matchtype, textval, vnum);
-	},
+        type: hdxCBPTypes.VARIABLE,
+        selector: {
+            type: hdxCBPSelectors.EDGE,
+            eindexvar: "via"
+        },
+        f: function(thisAV, edgenum, matchtype, textval, vnum) {
+            return isCBPEdgeMatch(thisAV.visiting.connection,
+                                  edgenum, matchtype, textval, vnum);
+        },
     }
 ];    
 
@@ -435,7 +435,7 @@ const hdxTraversalsSpanningAVCommon = {
                 
                 hdxAV.nextAction = "checkAdded";
             },
-	    cbp: hdxCBPToAndVia,
+            cbp: hdxCBPToAndVia,
             logMessage: function(thisAV) {
                 return "Removed " +
                     thisAV.formatLDVEntry(thisAV.visiting) + " from " +
@@ -521,7 +521,7 @@ const hdxTraversalsSpanningAVCommon = {
                     hdxAV.nextAction = "checkComponentDone";
                 }
             },
-	    cbp: hdxCBPToAndVia,
+            cbp: hdxCBPToAndVia,
             logMessage: function(thisAV) {
                 return "Discarding " +
                     thisAV.formatLDVEntry(thisAV.visiting) + " on removal";
@@ -575,12 +575,15 @@ const hdxTraversalsSpanningAVCommon = {
                 // paths
                 if (thisAV.stoppingCondition == "StopAtEnd") {
                     thisAV.treeEdges.push(thisAV.visiting);
+
+                    // change the path to here to the "foundPath" color
+                    thisAV.setVSOfPathToVisiting(thisAV.visualSettings.foundPath);
                 }
                 
                 thisAV.updateControlEntries();
                 hdxAV.nextAction = "checkNeighborsLoopTop";
             },
-	    cbp: hdxCBPToAndVia,
+            cbp: hdxCBPToAndVia,
             logMessage: function(thisAV) {
                 return "Adding " + thisAV.formatLDVEntry(thisAV.visiting) + " to tree";
             }
@@ -591,6 +594,9 @@ const hdxTraversalsSpanningAVCommon = {
             code: function(thisAV) {
                 highlightPseudocode(this.label, visualSettings.visiting);
 
+                // change the path to here back to the "spanningTree" color
+                thisAV.setVSOfPathToVisiting(visualSettings.spanningTree);
+                
                 // build list of neighbors to visit
                 const neighbors = getAdjacentPoints(thisAV.visiting.vIndex);
                 for (let i = 0; i < neighbors.length; i++) {
@@ -644,17 +650,17 @@ const hdxTraversalsSpanningAVCommon = {
                     hdxAV.nextAction = "checkNeighborsLoopIfFalse";
                 }
             },
-	    cbp: {
-		type: hdxCBPTypes.VARIABLE,
-		selector: {
-		    type: hdxCBPSelectors.VERTEX,
-		    vindexvar: "v"
-		},
-		f: function(thisAV, matchvnum, matchtype, textval) {
-		    return isCBPVertexMatch(thisAV.nextNeighbor.to,
-					    matchvnum, matchtype, textval);
-		}
-	    },
+            cbp: {
+                type: hdxCBPTypes.VARIABLE,
+                selector: {
+                    type: hdxCBPSelectors.VERTEX,
+                    vindexvar: "v"
+                },
+                f: function(thisAV, matchvnum, matchtype, textval) {
+                    return isCBPVertexMatch(thisAV.nextNeighbor.to,
+                                            matchvnum, matchtype, textval);
+                }
+            },
             logMessage: function(thisAV) {
                 return "Checking if #" + thisAV.nextNeighbor.to +
                     " is in the tree";
@@ -751,31 +757,31 @@ const hdxTraversalsSpanningAVCommon = {
                     hdxAV.nextAction = "checkComponentDone";
                 }
             },
-	    cbp: [
-		{
-		    type: hdxCBPTypes.VARIABLE,
-		    selector: {
-			type: hdxCBPSelectors.VERTEX,
-			vindexvar: "v",
-			id: "ToVertex"
-		    },
-		    f: function(thisAV, matchvnum, matchtype, textval) {
-			return isCBPVertexMatch(thisAV.nextNeighbor.to,
-				    matchvnum, matchtype, textval);
-		    }		
-		},
-		{
-		    type: hdxCBPTypes.VARIABLE,
-		    selector: {
-			type: hdxCBPSelectors.EDGE,
-			eindexvar: "e"
-		    },
-		    f: function(thisAV, edgenum, matchtype, textval, vnum) {
-			return isCBPEdgeMatch(thisAV.nextNeighbor.via,
-					      edgenum, matchtype, textval, vnum);
-		    },
-		}
-	    ],
+            cbp: [
+                {
+                    type: hdxCBPTypes.VARIABLE,
+                    selector: {
+                        type: hdxCBPSelectors.VERTEX,
+                        vindexvar: "v",
+                        id: "ToVertex"
+                    },
+                    f: function(thisAV, matchvnum, matchtype, textval) {
+                        return isCBPVertexMatch(thisAV.nextNeighbor.to,
+                                    matchvnum, matchtype, textval);
+                    }           
+                },
+                {
+                    type: hdxCBPTypes.VARIABLE,
+                    selector: {
+                        type: hdxCBPSelectors.EDGE,
+                        eindexvar: "e"
+                    },
+                    f: function(thisAV, edgenum, matchtype, textval, vnum) {
+                        return isCBPEdgeMatch(thisAV.nextNeighbor.via,
+                                              edgenum, matchtype, textval, vnum);
+                    },
+                }
+            ],
             logMessage: function(thisAV) {
                 return "#" + thisAV.nextNeighbor.to + " via " +
                     graphEdges[thisAV.nextNeighbor.via].label +
@@ -1073,6 +1079,28 @@ const hdxTraversalsSpanningAVCommon = {
         }
         return "#" + vIndex + " " + waypoints[vIndex].label + edgeLabel;
     },
+
+    // change the visual settings of the waypoints and connections on the
+    // path to the place just added to the spanning tree
+    setVSOfPathToVisiting(vs) {
+
+        // in the table of tree edges, work back from this.visiting.vIndex
+        // until we get to the starting vertex
+        let place = this.visiting.vIndex;
+        updateMarkerAndTable(place, vs, 4, false);
+        let plIndex = this.treeEdges.length - 1;
+        while (place != this.startingVertex) {
+            let treeEdge = this.treeEdges[plIndex];
+            while (place != treeEdge.vIndex) {
+                plIndex--;
+                treeEdge = this.treeEdges[plIndex];
+            }
+            updateMarkerAndTable(place, vs, 4, false);
+            updatePolylineAndTable(treeEdge.connection, vs, false);
+            plIndex--;
+            place = treeEdge.fromVIndex;
+        }
+    },
     
     // required prepToStart function, here do things common to all
     // traversals/spanning algorithms
@@ -1110,9 +1138,9 @@ const hdxTraversalsSpanningAVCommon = {
 
         let newAO =
             buildWaypointSelector("startPoint", "Start Vertex", 0) +
-            "<br />" +
+            '<br /><span id="endPointAll">' +
             buildWaypointSelector("endPoint", "End Vertex", 1) + `
-<br />
+<br /></span>
 <select id="stoppingCondition" onchange="stoppingConditionChanged();">
 <option value="StopAtEnd" selected>Stop When End Vertex Reached</option>
 <option value="FindReachable">Find All Vertices Reachable from Start</option>
@@ -1144,17 +1172,24 @@ const hdxTraversalsSpanningAVCommon = {
         this.foundTBody = document.getElementById("foundEntries");
         this.foundLabel = document.getElementById("foundTableLabel");
 
-	// QS parameters
-	HDXQSClear(this);
-	HDXQSRegisterAndSetNumber(this, "startPoint", "startPoint", 0,
-				  waypoints.length - 1);
-	HDXQSRegisterAndSetNumber(this, "endPoint", "endPoint", 0,
-				  waypoints.length - 1);
-	HDXQSRegisterAndSetSelectList(this, "stoppingCondition",
-				      "stoppingCondition");
-	// note: traversal discipline will be specified only for
-	// graph traversals and will be added in this call
-	this.extraQSSetup();
+        // QS parameters
+        HDXQSClear(this);
+        HDXQSRegisterAndSetNumber(this, "startPoint", "startPoint", 0,
+                                  waypoints.length - 1);
+        // fifth parameter here is a function to check, when a list of QS
+        // parameters is being constructed, under what circumstances this
+        // one should be included
+        HDXQSRegisterAndSetNumber(this, "endPoint", "endPoint", 0,
+                                  waypoints.length - 1,
+                                  function(av) {
+                                      const selector = document.getElementById("stoppingCondition");
+                                      return selector.options[selector.selectedIndex].value == "StopAtEnd"; 
+                                  });
+        HDXQSRegisterAndSetSelectList(this, "stoppingCondition",
+                                      "stoppingCondition");
+        // note: traversal discipline will be specified only for
+        // graph traversals and will be added in this call
+        this.extraQSSetup();
     },
 
     // clean up common UI components
@@ -1163,13 +1198,13 @@ const hdxTraversalsSpanningAVCommon = {
     },
     
     idOfAction(action) {
-	
+        
         return action.label;
     },
 
     // overridden by graph traversals which have an extra QS parameter
     extraQSSetup() {
-	
+        
     }
 };
 
@@ -1177,9 +1212,13 @@ const hdxTraversalsSpanningAVCommon = {
 function stoppingConditionChanged() {
 
     const selector = document.getElementById("stoppingCondition");
-    const endSelector = document.getElementById("endPoint");
-    endSelector.disabled =
-        selector.options[selector.selectedIndex].value != "StopAtEnd";
+    const endSelectorAll = document.getElementById("endPointAll");
+    if (selector.options[selector.selectedIndex].value == "StopAtEnd") {
+        endSelectorAll.style.display = "";
+    }
+    else {
+        endSelectorAll.style.display = "none";
+    }
 }
 
 /* graph traversals based on hdxTraversalsSpanningAVCommon */
@@ -1204,7 +1243,7 @@ Order: <select id="traversalDiscipline">
 hdxGraphTraversalsAV.extraQSSetup = function() {
 
     HDXQSRegisterAndSetSelectList(hdxGraphTraversalsAV, "traversalDiscipline",
-				  "traversalDiscipline");
+                                  "traversalDiscipline");
 };
 
 hdxGraphTraversalsAV.distEntry = "Hops";
@@ -1387,7 +1426,7 @@ hdxDijkstraAV.setupCode = function() {
 };
 
 
-/* Astar's algorithm based on hdxTraversalsSpanningAVCommon */
+/* A* algorithm based on hdxTraversalsSpanningAVCommon */
 
 const hdxAstarAV = Object.create(hdxTraversalsSpanningAVCommon);
 
@@ -1454,7 +1493,7 @@ hdxAstarAV.mainLoopBody = function(indent) {
 
 };
 
-// Astar-specific psuedocode, note labels must match those
+// A*-specific psuedocode, note labels must match those
 // expected by hdxTraversalsSpanningAVCommon avActions
 hdxAstarAV.setupCode = function() {
     this.code = '<table class="pseudocode">' +
