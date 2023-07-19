@@ -1,0 +1,138 @@
+button,
+input,
+select,
+option {
+  background-color: inherit;
+  color: inherit;
+  border: 2px solid #4caf50;
+  padding: 8px 16px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 16px;
+  margin: 4px 2px;
+  transition-duration: 0.4s;
+  cursor: pointer;
+  display: inline;
+}
+
+button:hover,
+input:hover,
+option:hover {
+  background-color: #4caf50;
+  color: white;
+}
+
+/* CSS for the overall layout */
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* CSS for the header bar */
+header {
+  background-color: #333;
+  color: #fff;
+  padding: 15px;
+  max-height: 10%;
+}
+
+/* CSS for the control panel */
+#controlPanel {
+  background-color: #f1f1f1;
+  padding: 20px;
+  float: left;
+  height: calc(100% - 160px);
+  max-height: calc(100% - 160px);
+  min-width: 20%;
+  max-width: 20%;
+  overflow-y: auto;
+  /* Add a scrollbar when content exceeds max height */
+}
+
+/* CSS for the main content area */
+.maps {
+  display: grid;
+  gap: 20px;
+  padding: 20px;
+  height: calc(100% - 160px);
+  max-height: calc(100% - 160px);
+  /* Subtract header and padding height */
+  overflow-y: auto;
+  /* Add a scrollbar when content exceeds max height */
+  z-index: 0 !important;
+}
+
+.even {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.odd {
+  grid-template-columns: auto;
+}
+
+.pseudoCode {
+  font-family: 'Poppins', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  color: #4caf50;
+  text-decoration: none;
+  background-color: #333;
+  max-width: 100%;
+
+}
+
+.pseudoRow {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px;
+  border: #000 1px solid;
+}
+
+.highlight {
+  background-color: #4caf50;
+  color: #333;
+}
+
+.infoPanel {
+  padding: 20px;
+  overflow-y: auto;
+  /* Add a scrollbar when content exceeds max height */
+  border: 2px solid #000;
+  border-radius: 5px;
+}
+
+.breakpoint {
+  border: red 2px solid;
+}
+
+/* CSS for the modal which pops up in the middle of the screen and centered content*/
+.modal {
+  display: block;
+  position: fixed;
+  z-index: 1;
+  padding-top: 100px;
+  width: 15%;
+  min-width: 250px;
+  height: 70%;
+  overflow: auto;
+  left: 45%;
+  top: 15%;
+  background-color: #333;
+  color: #fff;
+  border: 1px solid #111;
+  border-radius: 5px;
+  opacity: 0.8;
+  padding: 20px;
+  text-align: center;
+}
+
+datalist {
+  color: blue;
+  font-size: 24px;
+  font-family: sans-serif;
+}
